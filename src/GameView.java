@@ -35,20 +35,30 @@ public class GameView extends JPanel {
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-                if (controller.isGameRunning()) {
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_LEFT -> controller.moveLeft();
-                        case KeyEvent.VK_RIGHT -> controller.moveRight();
-                        case KeyEvent.VK_DOWN -> controller.moveDown();
-                        case KeyEvent.VK_UP -> // повернуть стрелка вверх
-                                controller.rotate();
-                        case KeyEvent.VK_P -> // пауза на P
-                                controller.pauseGame();
-                        case KeyEvent.VK_ESCAPE -> // выход из игры Esc
-                                System.exit(0);
-                    }
-            } else if (e.getKeyCode() == KeyEvent.VK_P) {
-                controller.pauseGame();
+            if (controller.isGameRunning() || e.getKeyCode() == KeyEvent.VK_P) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        controller.moveLeft();
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        controller.moveRight();
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        controller.moveDown();
+                        break;
+                    case KeyEvent.VK_UP:
+                        // Повернуть фигуру на стрелку вверх
+                        controller.rotate();
+                        break;
+                    case KeyEvent.VK_P:
+                        // Пауза на P, возобновление игры, если она была приостановлена
+                        controller.pauseGame();
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        // Выход из игры на ESC
+                        controller.quitGame();  // Вместо System.exit(0); лучше вынести в отдельный метод
+                        break;
+                }
             }
         }
     }

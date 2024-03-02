@@ -68,6 +68,9 @@ public class GameController implements ActionListener {
     }
 
     private void updateGame() {
+        if (!gameRunning){
+            return;
+        }
         if (!currentFigure.moveDown()) {
             field.absorbFigure(currentFigure);
             int lines = field.removeFullLines();
@@ -78,7 +81,7 @@ public class GameController implements ActionListener {
             }
             currentFigure = nextFigure;
             nextFigure = FigureFactory.createRandomFigure(field);
-            if (!field.canSpawnFigure(currentFigure)) {
+            if (field.canSpawnFigure(currentFigure)) {
                 gameOver();
             }
         }
@@ -105,7 +108,7 @@ public class GameController implements ActionListener {
             field.absorbFigure(currentFigure);
             currentFigure = nextFigure;
             nextFigure = FigureFactory.createRandomFigure(field);
-            if (!field.canSpawnFigure(currentFigure)) {
+            if (field.canSpawnFigure(currentFigure)) {
                 gameRunning = false;
             }
         }
@@ -143,10 +146,14 @@ public class GameController implements ActionListener {
         gameRunning = timer.isRunning();
     }
 
+    public void quitGame() {
+        dispose();
+        System.exit(0);
+    }
+
     public Figure getCurrentFigure() {
         return currentFigure;
     }
-
 
     public List<PlayerScore> getLeaderBoard() {
         return leaderBoard;
@@ -162,10 +169,6 @@ public class GameController implements ActionListener {
 
     public int getLevel() {
         return gameLogic.getLevel();
-    }
-
-    public int getLinesRemoved() {
-        return gameLogic.getLinesRemoved();
     }
 
     public int getDelay() {

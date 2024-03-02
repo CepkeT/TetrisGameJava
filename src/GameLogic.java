@@ -2,9 +2,10 @@ public class GameLogic {
     private int score;
     private int level;
     private int linesRemoved;
-    private static final int BASE_SCORE_FOR_LEVEL = 100;
+    private static final int BASE_SCORE_FOR_LEVEL = 700;
     private static final double LEVEL_MULTIPLIER = 2;
     private static final int INITIAL_DELAY = 700;
+    private static final int DELAY_DECREASE_PER_LEVEL = 20;
     private int delay;
 
     public GameLogic() {
@@ -28,7 +29,8 @@ public class GameLogic {
         int nextLevelScore = (int) (BASE_SCORE_FOR_LEVEL * Math.pow(LEVEL_MULTIPLIER, level - 1));
         if (score >= nextLevelScore) {
             level++;
-            delay = INITIAL_DELAY;
+            int someMinimumDelay = 20;
+            delay = Math.max(INITIAL_DELAY - DELAY_DECREASE_PER_LEVEL * (level - 1), someMinimumDelay);
         }
     }
 

@@ -68,12 +68,12 @@ public class Field {
             for (int col = 0; col < figure.getShape()[0].length; col++) {
                 if (figure.getShape()[row][col] != 0) {
                     if (isOccupied(col, row)) {
-                        return false;
+                        return true;
                     }
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public void clear() {
